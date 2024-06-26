@@ -8,37 +8,44 @@ function Book({title, author, pages}, read) {
     this.read = read;
 }
 
+// add `Book` to library
 function addBookToLibrary(Book, myLibrary){
     myLibrary.push(Book)
 }
 
-function displayBookList2(myLibrary) {
-    var table = document.getElementById("Library_Table");  // set this to your table
-    var tbody = document.createElement("tbody")
-    table.append(tbody)
-
-    myLibrary.forEach(book => {
-        // create row, create column and fill each column
-        var row = document.createElement("tr")
-        Object.values(book).forEach(col => {
-            var cell = document.createElement("td")
-            cell.textContent = col
-            row.appendChild(cell)
-        })
-        table.appendChild(row)
+// delete book from myLibrary
+function deleteBook(row, ind) {
+    // cell to add delete
+    const deleteCell = row.insertCell();
+    
+    // add a delete button(element) and attach eventlistner to it
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", () => {
+        // user confirmatiion
+        if (confirm("Confirm?")) {
+            myLibrary.splice(ind, 1)
+            displayBookList(myLibrary)
+        }
     });
+
+    deleteCell.appendChild(deleteBtn);
 }
 
 function displayBookList(myLibrary) {
-    var table = document.getElementById("Library_Table").getElementsByTagName('tbody')[0]; // Corrected table reference
+    // display books
+    const table = document.getElementById("Library_Table").getElementsByTagName('tbody')[0];
     table.innerHTML = ''; // Clear existing tbody content
 
-    myLibrary.forEach(book => {
-        var row = table.insertRow();
+    myLibrary.forEach((book, ind) => {
+        const row = table.insertRow();
         Object.values(book).forEach(value => {
-            var cell = row.insertCell();
+            const cell = row.insertCell();
             cell.textContent = value;
         });
+        
+        // delete button functionality
+        deleteBook(row, ind)
     });
 }
 
