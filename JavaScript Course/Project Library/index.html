@@ -1,18 +1,51 @@
+<!DOCTYPE html>
 <html>
-    <title> Library Project</title>
-    <body>
-        <p> Hello World</p>
-        <table id="Library Table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Pages</th>
-                    <th>Read</th>
-                </tr>
-            </thead>
-        </table>
+<head>
+    <title>Library Project</title>
+</head>
+<body>
+    <table id="Library_Table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Pages</th>
+                <th>Read</th>
+            </tr>
+        </thead>
+        <tbody></tbody> <!-- Added tbody -->
+    </table>
 
-        <script src="script.js"></script>
-    </body>
+    <dialog id="add-book-dialog">
+        <form id="add-book" method="dialog">
+            <p>
+                <label>
+                    Title:
+                    <input type="text" id="title" required />
+                </label>
+                <label>
+                    Author:
+                    <input type="text" id="author" required />
+                </label>
+                <label>
+                    Pages:
+                    <input type="number" id="pages" required />
+                </label>
+                <label>
+                    Read:
+                    <input type="checkbox" id="read" />
+                </label>
+            </p>
+            <div>
+                <input type="submit" id="js-close" value="JS close" />
+            </div>
+        </form>
+    </dialog>
+    <p>
+        <button id="show-dialog">Add a book</button>
+    </p>
+    <output></output>
+
+    <script src="script.js"></script>
+</body>
 </html>

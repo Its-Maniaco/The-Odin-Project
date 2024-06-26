@@ -6,15 +6,14 @@ function Book({title, author, pages}, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-
 }
 
-function addBooktToLibrary(Book, myLibrary){
+function addBookToLibrary(Book, myLibrary){
     myLibrary.push(Book)
 }
 
-function displayBookList(myLibrary) {
-    var table = document.getElementById("Library Table");  // set this to your table
+function displayBookList2(myLibrary) {
+    var table = document.getElementById("Library_Table");  // set this to your table
     var tbody = document.createElement("tbody")
     table.append(tbody)
 
@@ -28,19 +27,42 @@ function displayBookList(myLibrary) {
         })
         table.appendChild(row)
     });
-
-   
-    
 }
 
+function displayBookList(myLibrary) {
+    var table = document.getElementById("Library_Table").getElementsByTagName('tbody')[0]; // Corrected table reference
+    table.innerHTML = ''; // Clear existing tbody content
 
-testBook1 = new Book({title: "Book 1", author: "Author 1", pages: 32}, false)
-testBook2 = new Book({title: "Book 2", author: "Author 2", pages: 32}, true)
-testBook3 = new Book({title: "Book 3", author: "Author 3", pages: 32}, false)
-testBook4 = new Book({title: "Book 4", author: "Author 4", pages: 32}, true)
+    myLibrary.forEach(book => {
+        var row = table.insertRow();
+        Object.values(book).forEach(value => {
+            var cell = row.insertCell();
+            cell.textContent = value;
+        });
+    });
+}
 
-addBooktToLibrary(testBook1, myLibrary)
-addBooktToLibrary(testBook2, myLibrary)
-addBooktToLibrary(testBook3, myLibrary)
-addBooktToLibrary(testBook4, myLibrary)
-displayBookList(myLibrary)
+const showBtn = document.getElementById("show-dialog");
+const dialog = document.getElementById("add-book-dialog");
+const jsCloseBtn = document.getElementById("js-close");
+const addBookForm = document.getElementById("add-book");
+
+showBtn.addEventListener("click", () => {
+    console.log("Modal opened")
+    dialog.showModal();
+});
+
+jsCloseBtn.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevents default form submission behavior
+
+    const title = document.getElementById("title").value;
+    const author = document.getElementById("author").value;
+    const pages = document.getElementById("pages").value;
+    const read = document.getElementById("read").checked;
+
+    const book = new Book({ title, author, pages }, read);
+
+    addBookToLibrary(book, myLibrary);
+    displayBookList(myLibrary);
+    dialog.close();
+});
