@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head> Add a new Author 
+        <title> submit form </title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <!-- `action` attribute specifies where to send the form-data when a form is submitted.-->
+        <form method="POST" action="/new"> 
+            <label for="Author">Author: </label>
+            <input id="Author" type="text"  name="Author" required>
+
+            <label for="Text">Text: </label>
+            <input id="Text" type="text"  name="Text" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>
