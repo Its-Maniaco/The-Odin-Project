@@ -12,6 +12,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const catalogRouter = require('./routes/catalog');
 const wiki = require("./routes/wiki");
+const compression = require("compression");
+const helmet = require("helmet");
 
 // Set up mongoose connection
 const mongoose = require("mongoose");
@@ -24,6 +26,17 @@ async function main() {
 }
 
 const app = express();
+
+// Add helmet to the middleware chain.
+// Set CSP headers to allow our Bootstrap and Jquery to be served
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+    },
+  }),
+);
+
 // view engine setup
 // specify the folder where the templates will be stored
 app.set('views', path.join(__dirname, 'views'));
@@ -37,10 +50,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression()); // Compress all routes
 app.use(express.static(path.join(__dirname, 'public')));
 
 // require route module
-
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
